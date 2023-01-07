@@ -17,11 +17,10 @@ const corporateRouter = require('./routes/corporate.router');
 const ticketRouter = require('./routes/ticket.router');
 
 const app = express();
-const db = mongoConnect('mongodb+srv://omar:1234@cluster0.mpn2cso.mongodb.net/?retryWrites=true&w=majority');
+const db = mongoConnect(process.env.MongoDB_URL);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.static('dist'));
 app.use((req, res, next) => {
   if (req.originalUrl === '/api/payment/webhook') {
     next();
@@ -29,6 +28,9 @@ app.use((req, res, next) => {
     express.json()(req, res, next);
   }
 });
+
+app.use(express.static('dist'));
+
 app.use('/api/users', userRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/reviews', reviewRouter);
@@ -37,7 +39,7 @@ app.use('/api/corporate', corporateRouter);
 app.use('/api/ticket', ticketRouter);
 
 app.all('*', (req, res, next) => {
-    res.sendFile('index.html', { root: './dist' });
+  res.sendFile('index.html', { root: './dist' });
 });
 
 app.use((err, req, res, next) => {
@@ -49,6 +51,6 @@ app.use((err, req, res, next) => {
     message: err.message,
   });
 });
-app.listen(5555, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server is up on Port ${process.env.PORT}`);
 });

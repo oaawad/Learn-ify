@@ -17,6 +17,7 @@ const {
   getSubjects,
   getPromotions,
   adminPromotion,
+  closeCourse,
 } = require('../controllers/course.controllers');
 const { getCourseReviews } = require('../controllers/review.controllers');
 
@@ -34,6 +35,7 @@ router
   .get(catchAsync(viewCourse))
   .patch(protect, catchAsync(editCourse))
   .delete(protect, catchAsync(deleteCourse));
+router.get('/:id/close', protect, catchAsync(closeCourse));
 router.get('/:id/reviews', catchAsync(getCourseReviews));
 router
   .route('/:id/promotion')

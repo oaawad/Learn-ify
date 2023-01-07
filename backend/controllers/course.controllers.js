@@ -311,6 +311,21 @@ const adminPromotion = async (req, res) => {
   });
   res.status(201).json({ message: 'Promotions created' });
 };
+
+const closeCourse = async (req, res) => {
+  const id = req.params.id;
+  const course = await Course.findById(id);
+  if (!course) {
+    return res.status(400).json({ message: 'Course not found' });
+  }
+  if (req.user._id.toString() !== course.instructor.toString()) {
+    return res.status(400).json({ message: 'You are not the instructor of this course' });
+  }
+  course.status = 'closed';
+  await course.save();
+  res.status(200).json({ message: 'Course closed' });
+};
+
 module.exports = {
   getAll,
   getAllNames,
@@ -326,4 +341,5 @@ module.exports = {
   getSubjects,
   getPromotions,
   adminPromotion,
+  closeCourse,
 };

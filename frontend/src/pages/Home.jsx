@@ -35,19 +35,20 @@ function Home() {
           flexDirection: 'column',
           flexGrow: '1',
         }}
-        maxWidth="lg"
+        maxWidth="md"
       >
         <Grid
           container
           sx={{
             flexGrow: '1',
+            minHeight: 'calc(100vh - 64px)',
           }}
         >
           <Grid
             item
             sx={{
               alignSelf: 'center',
-              paddingLeft: '5rem',
+              px: { xs: '1rem' },
             }}
             md={7}
           >

@@ -46,6 +46,7 @@ function ViewCourse(props) {
   const [currency, setCurrency] = useState(null);
   const [reviews, setReviews] = useState(null);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openClose, setOpenClose] = useState(false);
   const { country } = useSelector((state) => state.user);
   const cntryObj = typeof country === 'string' ? JSON.parse(country) : country;
   let { user } = useSelector((state) => state.user);
@@ -96,6 +97,15 @@ function ViewCourse(props) {
       },
     });
     toast.success('Course deleted');
+    navigate('/profile');
+  };
+  const handleClose = async () => {
+    await axios.get(`/api/courses/${id}/close`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    toast.success('Course closed');
     navigate('/profile');
   };
 
@@ -397,11 +407,13 @@ function ViewCourse(props) {
                                 {course?.price === 0
                                   ? 'Free'
                                   : currency
-                                    ? `${Math.round(
-                                      course?.price * currency.rate * (100 - promotion.amount)
-                                    ) / 100
+                                  ? `${
+                                      Math.round(
+                                        course?.price * currency.rate * (100 - promotion.amount)
+                                      ) / 100
                                     } ${currency.code}`
-                                    : `${Math.round(course?.price * (100 - promotion.amount)) / 100
+                                  : `${
+                                      Math.round(course?.price * (100 - promotion.amount)) / 100
                                     } USD`}
                               </Typography>
                             ) : null}
@@ -415,9 +427,10 @@ function ViewCourse(props) {
                               {course?.price === 0
                                 ? 'Free'
                                 : currency
-                                  ? `${Math.round(course?.price * currency.rate * 100) / 100} ${currency.code
+                                ? `${Math.round(course?.price * currency.rate * 100) / 100} ${
+                                    currency.code
                                   }`
-                                  : `${course?.price}.00 USD`}
+                                : `${course?.price}.00 USD`}
                             </Typography>
                           </Stack>
                           {promotion ? (
@@ -509,7 +522,7 @@ function ViewCourse(props) {
                       alignItems="center"
                       justifyContent="center"
                     >
-                      {owner ? (
+                      {owner && !props.draft ? (
                         <>
                           <PromotionModal
                             promotion={promotion}
@@ -517,7 +530,89 @@ function ViewCourse(props) {
                             token={user.token}
                             id={id}
                           />
-
+                          <ReportCourse id={id}></ReportCourse>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            sx={{ width: '80%', mt: '1rem' }}
+                            onClick={() => setOpenClose(true)}
+                          >
+                            <Typography color="grey.300">Close</Typography>
+                          </Button>
+                          <Modal
+                            open={openClose}
+                            onClose={() => setOpenClose(false)}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box
+                              sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                transform: 'translate(-50%, -50%)',
+                                width: '350px',
+                                bgcolor: 'background.paper',
+                                boxShadow: 24,
+                                p: 4,
+                              }}
+                            >
+                              <Typography
+                                id="modal-modal-title"
+                                variant="h6"
+                                textAlign="center"
+                                component="h2"
+                              >
+                                Are you sure you want to close this course?
+                              </Typography>
+                              <Typography id="subtitle2" textAlign="center" sx={{ mt: 2 }}>
+                                Students will no longer be able to enroll in this course.
+                              </Typography>
+                              <Stack
+                                direction="row"
+                                justifyContent="center"
+                                alignItems="center"
+                                mt={2}
+                                spacing={2}
+                              >
+                                <Button variant="contained" color="error" onClick={handleClose}>
+                                  Close
+                                </Button>
+                                <Button
+                                  variant="outlined"
+                                  color="primary"
+                                  onClick={() => setOpenClose(false)}
+                                >
+                                  Cancel
+                                </Button>
+                              </Stack>
+                            </Box>
+                          </Modal>
+                        </>
+                      ) : enrolled && !props.draft ? (
+                        <>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            sx={{ width: '80%', marginTop: '1rem' }}
+                            href={`/courses/${id}/learn`}
+                          >
+                            Open Course
+                          </Button>
+                          <ReportCourse id={id}></ReportCourse>
+                        </>
+                      ) : user?.type === 'corporate' ? (
+                        <>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            sx={{ width: '80%', marginTop: '1rem' }}
+                          >
+                            Request Access
+                          </Button>
+                        </>
+                      ) : props.draft ? (
+                        <>
                           <Button
                             variant="outlined"
                             color="success"
@@ -526,9 +621,6 @@ function ViewCourse(props) {
                           >
                             Edit Course
                           </Button>
-                          <ReportCourse
-                            id={id}
-                          ></ReportCourse>
                           <Button
                             variant="contained"
                             color="error"
@@ -587,49 +679,13 @@ function ViewCourse(props) {
                             </Box>
                           </Modal>
                         </>
-                      ) : enrolled ? (
-                        <>
-
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            sx={{ width: '80%', marginTop: '1rem' }}
-                            href={`/courses/${id}/learn`}
-                          >
-                            Open Course
-                          </Button>
-                          <ReportCourse
-                            id={id}
-                          ></ReportCourse>
-                        </>
-                      ) : user.type === 'individual' ? (
-                        <>
-                          <PaymentButton
-                            course={course}
-                            currency={currency}
-                            variant={'contained'}
-                            sx={{ width: '80%', marginTop: '1rem' }}
-                          />
-                          <ReportCourse
-                            id={id}
-                          ></ReportCourse>
-                        </>
                       ) : (
-                        user.type === 'corporate' && (
-                          <>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              sx={{ width: '80%', marginTop: '1rem' }}
-                            >
-                              Request Access
-                            </Button>
-                            <ReportCourse
-                              setCourse={setCourse}
-                              id={id}
-                            ></ReportCourse>
-                          </>
-                        )
+                        <PaymentButton
+                          course={course}
+                          currency={currency}
+                          variant={'contained'}
+                          sx={{ width: '80%', marginTop: '1rem' }}
+                        />
                       )}
 
                       {!props.draft ? (
@@ -647,13 +703,11 @@ function ViewCourse(props) {
                         </Stack>
                       ) : null}
                     </Stack>
-
-
                   </Box>
                 </Box>
                 {enrolled &&
-                  reviews?.filter((review) => review.user._id === user._id).length === 0 &&
-                  !props.draft ? (
+                reviews?.filter((review) => review.user._id === user._id).length === 0 &&
+                !props.draft ? (
                   <ReviewForm setReviews={setReviews} course={course._id} token={user.token} />
                 ) : null}
               </Grid>
@@ -662,9 +716,8 @@ function ViewCourse(props) {
         </>
       ) : (
         <Spinner />
-      )
-      }
-    </Box >
+      )}
+    </Box>
   );
 }
 

@@ -96,7 +96,7 @@ const CourseSchema = new Schema({
   // status: ['public', 'draft''],
   status: {
     type: String,
-    enum: ['public', 'draft'],
+    enum: ['public', 'draft', 'closed'],
     required: [true, 'Please Enter a Status'],
   },
   level: {

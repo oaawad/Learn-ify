@@ -1,4 +1,3 @@
-
 import CourseGallery from '../components/CourseGallery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -39,7 +38,22 @@ function Courses() {
         </Breadcrumbs>
       </Box>
       <Container maxWidth="lg">
-        {courses.length === 0 ? <Spinner /> : <CourseGallery courses={courses} noFilters={false} />}
+        {courses.length === 0 ? (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              maxWidth: '100%',
+              height: '40vh',
+            }}
+          >
+            <Spinner />
+          </Box>
+        ) : (
+          <CourseGallery courses={courses} noFilters={false} />
+        )}
       </Container>
     </Box>
   );
