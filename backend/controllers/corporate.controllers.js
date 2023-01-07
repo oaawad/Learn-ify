@@ -18,7 +18,7 @@ const createCorporate = async (req, res) => {
   }
   const corporateExists = await Corporate.findOne({ name });
   if (corporateExists) {
-    res.status(400).json({ message: 'Corporate already exists' });
+    res.status(400).json({ message: 'Corporate already exists ' });
   }
   const corporate = await Corporate.create({
     name,
