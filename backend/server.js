@@ -17,10 +17,11 @@ const corporateRouter = require('./routes/corporate.router');
 const ticketRouter = require('./routes/ticket.router');
 
 const app = express();
-const db = mongoConnect(process.env.MongoDB_URL);
+const db = mongoConnect('mongodb+srv://omar:1234@cluster0.mpn2cso.mongodb.net/?retryWrites=true&w=majority');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.static('dist'));
 app.use((req, res, next) => {
   if (req.originalUrl === '/api/payment/webhook') {
     next();
@@ -36,7 +37,7 @@ app.use('/api/corporate', corporateRouter);
 app.use('/api/ticket', ticketRouter);
 
 app.all('*', (req, res, next) => {
-  next(new ExpressError(`Page Not Found`, 404));
+    res.sendFile('index.html', { root: './dist' });
 });
 
 app.use((err, req, res, next) => {
@@ -48,6 +49,6 @@ app.use((err, req, res, next) => {
     message: err.message,
   });
 });
-app.listen(process.env.PORT, () => {
+app.listen(5555, () => {
   console.log(`Server is up on Port ${process.env.PORT}`);
 });
