@@ -1,0 +1,28 @@
+.countryBar {
+  border-bottom: #000 solid 2px;
+  padding: 1vh;
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+  margin-top: 1vh;
+}
+.country {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  align-items: center;
+}
+
+.close-button {
+  margin-left: 2vh;
+  border: 0;
+  background-color: #22282f;
+  color: aliceblue;
+  font-size: large;
+  cursor: pointer;
+}
+
+.menu-flags {
+  max-width: 30vh;
+}
