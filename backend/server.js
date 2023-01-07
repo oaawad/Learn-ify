@@ -41,7 +41,7 @@ app.use('/api/corporate', corporateRouter);
 app.use('/api/ticket', ticketRouter);
 
 app.all('*', (req, res, next) => {
-  res.sendFile('index.html', { root: path.join(__dirname, '../frontend/dist') });
+  res.sendFile('index.html', { root: '../frontend/dist' });
 });
 
 app.use((err, req, res, next) => {
