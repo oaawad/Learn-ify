@@ -3,7 +3,7 @@ const Course = require('../models/course.model');
 const User = require('../models/user.model');
 const Promotion = require('../models/promotion.model');
 const Subject = require('../models/subject.model');
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = require('node-fetch');
 const Stripe = require('stripe');
 require('dotenv').config();
 const stripe = Stripe(process.env.STRIPE_KEY);
