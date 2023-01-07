@@ -13,7 +13,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
-      - run: 
-          npm install
-          cd frontend/
+      - run: npm install
+          cd frontend
           npm install
