@@ -33,7 +33,6 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 app.use('/api/users', userRouter);
-
 app.use('/api/courses', courseRouter);
 app.use('/api/reviews', reviewRouter);
 app.use('/api/payment', paymentRouter);
