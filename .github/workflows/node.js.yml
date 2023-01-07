@@ -18,6 +18,3 @@ jobs:
           cd frontend
           npm install
           npm run build
-          pm2 stop 0
-          pm2 start 0
-          sudo service nginx restart
