@@ -4,6 +4,7 @@ const router = express.Router();
 const dotenv = require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path');
 //Require utils
 const mongoConnect = require('./utils/mongoConnect');
 const ExpressError = require('./utils/ExpressError');
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
 app.use('/api/users', userRouter);
 app.use('/api/courses', courseRouter);
@@ -39,7 +40,7 @@ app.use('/api/corporate', corporateRouter);
 app.use('/api/ticket', ticketRouter);
 
 app.all('*', (req, res, next) => {
-  res.sendFile('index.html', { root: './dist' });
+  res.sendFile('index.html', { root: path.join(__dirname, '../frontend/dist') });
 });
 
 app.use((err, req, res, next) => {

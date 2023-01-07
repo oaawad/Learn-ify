@@ -47,11 +47,7 @@ const getMyRefundRequests = async (req, res) => {
       select: 'title',
     },
   });
-  let refundRequests = user.tickets.filter(
-    (ticket) =>
-      ticket.type === 'refund' && (ticket.status === 'unseen' || ticket.status === 'closed')
-  );
-  refundRequests = user.tickets.map((ticket) => {
+  let refundRequests = user.tickets.map((ticket) => {
     if (ticket.type === 'refund')
       return {
         courseName: ticket.course.title,
