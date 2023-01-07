@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const fetch = require('node-fetch');
 const pdf = require('pdf-creator-node');
 const moment = require('moment'); // require
