@@ -4,7 +4,7 @@ const Course = require('../models/course.model');
 const CorporateStudent = require('../models/corporateStudent.model');
 const sendEmail = require('../utils/sendEmail');
 const moment = require('moment');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const CourseRequest = require('../models/courseRequest.model');
 
