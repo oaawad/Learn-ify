@@ -13,9 +13,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
-      - run: npm i
+      - run: npm install
           cd frontend
-          npm i
+          npm install
           npm run build
           pm2 stop 0
           pm2 start 0
