@@ -14,14 +14,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
-      - run: 
-          npm i 
-      - name: 'Create .env file'
+      - name: 'backend'
         run: 
-          cd backend &&
-          echo "${{ secrets.MongoDB_URL }}" > .env
+          npm i 
       - name: 'frontend'
         run:
-          cd ../frontend &&
+          cd frontend &&
           npm i && 
           npm run build &&
