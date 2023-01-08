@@ -18,3 +18,5 @@ jobs:
         run: npm i
       - name: 'frontend'
         run: cd frontend && npm i && npm run build
+      - name: 'Deploy'
+        run: pm2 stop 1 && pm2 start 1 && sudo service nginx restart
