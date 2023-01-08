@@ -139,6 +139,7 @@ const inviteStudents = async (req, res) => {
   emails.forEach(async (email) => {
     const corporateStudent = await CorporateStudent.create({
       corporate: req.params.id,
+      username: email,
       email,
     });
     corporate.accounts.push(corporateStudent._id);

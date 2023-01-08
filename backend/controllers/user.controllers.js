@@ -669,6 +669,11 @@ const createCertif = async (data) => {
   var options = {
     format: 'A4',
     orientation: 'landscape',
+    childProcessOptions: {
+      env: {
+        OPENSSL_CONF: '/dev/null',
+      },
+    },
   };
   var document = {
     html: html,
@@ -829,6 +834,7 @@ const inviteInstructor = async (req, res) => {
   }
   const user = await User.create({
     email,
+    username: email,
     type: 'instructor',
   });
   const token = generateToken(user._id, '24h');
