@@ -15,8 +15,6 @@ jobs:
         with:
           node-version: ${{matrix.node-version}}
       - name: 'backend'
-        run: npm i 
+        run: npm i
       - name: 'frontend'
-        run: cd frontend && npm i
-      - name: 'test2'
-        run: npm run build
+        run: cd frontend && npm i && npm run build
