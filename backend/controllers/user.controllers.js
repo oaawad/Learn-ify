@@ -617,6 +617,11 @@ const downloadNotes = async (req, res) => {
         }   </span>`,
       },
     },
+    childProcessOptions: {
+      env: {
+        OPENSSL_CONF: '/dev/null',
+      },
+    },
   };
   var document = {
     html: html,
