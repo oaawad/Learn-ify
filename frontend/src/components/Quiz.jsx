@@ -61,7 +61,11 @@ function Quiz(props) {
               <Typography variant="h4" component="div" textAlign="center">
                 {props.quiz.title}
               </Typography>
-              <Typography variant="h6" sx={{ my: 1.5, fontWeight: 'regular' }} color="grey.800">
+              <Typography
+                variant="h6"
+                sx={{ my: 1.5, fontWeight: 'regular', textAlign: 'center' }}
+                color="grey.800"
+              >
                 {props.quiz.description}
               </Typography>
               <Typography
@@ -74,7 +78,13 @@ function Quiz(props) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button variant="contained" onClick={() => setStart(true)} fullWidth size="large">
+              <Button
+                variant="contained"
+                sx={{ mb: '0.5rem' }}
+                onClick={() => setStart(true)}
+                fullWidth
+                size="large"
+              >
                 Start
               </Button>
             </CardActions>
