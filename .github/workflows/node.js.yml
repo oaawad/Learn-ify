@@ -18,9 +18,10 @@ jobs:
           npm i 
       - name: 'Create env file'
         run: |
+          cd backend
           echo "${{ secrets.Production }}" > .env
       - name: 'frontend'
         run:
-          cd frontend
+          cd ../frontend
           npm i 
           npm run build 
