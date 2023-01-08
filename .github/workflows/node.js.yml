@@ -17,8 +17,6 @@ jobs:
       - name: 'backend'
         run: npm i 
       - name: 'frontend'
-        run: cd frontend
-      - name: 'test'
-        run: npm i
+        run: cd frontend && npm i
       - name: 'test2'
         run: npm run build
