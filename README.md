@@ -1,6 +1,5 @@
 # Online Learning System: Inferno
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oaawad/Learnify/node.js.yml)
-
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oaawad/Learnify/node.js.yml) ![Website](https://img.shields.io/website?down_message=offline&up_message=online&url=https%3A%2F%2Flearn-ify.live)
 Our project is a Website implemented using MERN stack that helps education be more accessible online and through it, an instructor create a course from one end and the user is able to search and view the available courses to book his/her desirable courses from the other end.
 
 ## Motivation
