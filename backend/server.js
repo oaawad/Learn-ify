@@ -39,6 +39,7 @@ app.use('/api/ticket', ticketRouter);
 
 if (process.env.ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
   app.all('*', (req, res, next) => {
     res.sendFile('index.html', { root: '../frontend/dist' });
   });
