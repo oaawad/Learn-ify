@@ -30,8 +30,6 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
-
 app.use('/api/users', userRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/reviews', reviewRouter);
@@ -39,9 +37,12 @@ app.use('/api/payment', paymentRouter);
 app.use('/api/corporate', corporateRouter);
 app.use('/api/ticket', ticketRouter);
 
-app.all('*', (req, res, next) => {
-  res.sendFile('index.html', { root: '../frontend/dist' });
-});
+if (process.env.ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+  app.all('*', (req, res, next) => {
+    res.sendFile('index.html', { root: '../frontend/dist' });
+  });
+}
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode ? err.statusCode : 500;
