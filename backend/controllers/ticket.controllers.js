@@ -47,14 +47,15 @@ const getMyRefundRequests = async (req, res) => {
       select: 'title',
     },
   });
-  let refundRequests = user.tickets.map((ticket) => {
+  let refundRequests = [];
+  user.tickets.forEach((ticket) => {
     if (ticket.type === 'refund')
-      return {
+      refundRequests.push({
         courseName: ticket.course.title,
         paymentTotal: parseInt(ticket.messages[0].message),
         status: ticket.status === 'unseen' ? 'Pending' : ticket.status,
         date: ticket.createdAt,
-      };
+      });
   });
   res.status(200).json(refundRequests);
 };
