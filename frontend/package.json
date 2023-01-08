@@ -22,7 +22,6 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-select": "^5.7.0",
-    "react-toastify": "^9.0.8",
     "react-youtube": "^10.0.0",
     "reactjs-popup": "^2.0.5",
     "stripe": "^11.5.0"
