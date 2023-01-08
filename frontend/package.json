@@ -12,6 +12,7 @@
     "axios": "^0.25.0",
     "chart.js": "^3.5.0",
     "js-file-download": "^0.4.12",
+    "json5": "^2.2.3",
     "moment": "^2.29.4",
     "mui-rte": "^2.0.1",
     "react": "^17.0.2",
