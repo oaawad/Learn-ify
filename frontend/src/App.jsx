@@ -24,7 +24,7 @@ import PopularCourses from './pages/PopularCourses';
 import Support from './pages/Support';
 import Report from './pages/Report';
 import PaymentsHistory from './pages/PaymentsHistory';
-
+import NotFound from './pages/NotFound';
 
 import * as React from 'react';
 import { Link as RouterLink, MemoryRouter } from 'react-router-dom';
@@ -143,14 +143,12 @@ function App() {
               <Route path="/Support" element={<Support />} />
               <Route path="/Support/Report/:id" element={<Report />} />
 
-
               <Route path="/checkout-success" element={<CheckoutSuccess />} />
               {/*TODO <Route path="/instructors" element={<Instructors />} />  */}
               <Route path="/instructors/:id" element={<InstructorProfile />} />
               <Route path="/learning" element={<Learning />} />
 
               <Route path="/dashboard" element={<Dashboard tab={'Dashboard'} />} />
-              <Route path="/dashboard/users" element={<Dashboard tab={'Users'} />} />
               <Route path="/dashboard/promotions" element={<Dashboard tab={'Promotions'} />} />
               <Route path="/dashboard/corporates" element={<Dashboard tab={'Corporates'} />} />
               <Route path="/dashboard/problems" element={<Dashboard tab={'Problems'} />} />
@@ -173,6 +171,8 @@ function App() {
               <Route path="/profile/draft/:id" element={<ViewCourse draft={true} />} />
               <Route path="/profile/draft/:id/edit" element={<CreateCourse edit={true} />} />
               <Route path="/profile/edit" element={<ChangePassword />} />
+
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Box>
           <Footer />

@@ -45,10 +45,6 @@ const marketingTabs = [
     icon: <DashboardIcon sx={{ fontSize: 'inherit' }} />,
   },
   {
-    label: 'Users',
-    icon: <PeopleAltIcon sx={{ fontSize: 'inherit' }} />,
-  },
-  {
     label: 'Promotions',
     icon: <DiscountIcon sx={{ fontSize: 'inherit' }} />,
   },
@@ -206,16 +202,15 @@ export default function Dashboard(props) {
             component="a"
             href="/"
             sx={{
-              mr: 2,
-              display: 'flex',
               fontFamily: 'Changa',
               fontWeight: 500,
               fontSize: '1.8rem',
               color: 'secondary.main',
               textDecoration: 'none',
+              mr: '2rem',
             }}
           >
-            <span style={{ color: '#3145FB' }}>E</span>-Learning
+            Learn-<span style={{ color: '#3145FB' }}>ify</span>
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -359,16 +354,6 @@ export default function Dashboard(props) {
           </List>
         </Stack>
       </Drawer>
-      <Main
-        open={open}
-        sx={{
-          bgcolor: 'grey.400',
-          flexGrow: 1,
-          display: active === 'Dashboard' ? 'block' : 'none',
-        }}
-      >
-        <DrawerHeader />
-      </Main>
       <Users open={open} active={active} user={user} />
       <Corporates open={open} active={active} user={user} />
       <Problems open={open} active={active} user={user} />

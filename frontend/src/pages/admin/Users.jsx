@@ -158,7 +158,7 @@ function Users(props) {
       sx={{
         bgcolor: 'grey.400',
         flexGrow: 1,
-        display: props.active === 'Users' ? 'block' : 'none',
+        display: props.active === 'Dashboard' ? 'block' : 'none',
       }}
     >
       <DrawerHeader />

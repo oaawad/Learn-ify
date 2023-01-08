@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 const FileDownload = require('js-file-download');
 import axios from 'axios';
-import userService from '../features/user/userService';
+import Spinner from '../components/Spinner';
 import Quiz from '../components/Quiz';
 import YouTube from 'react-youtube';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -32,6 +32,7 @@ function OpenCourse() {
   const [video, setVideo] = useState(null);
   const [quiz, setQuiz] = useState(null);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [notes, setNotes] = useState('');
   const [completed, setCompleted] = useState(false);
   const { id } = useParams();
@@ -40,7 +41,9 @@ function OpenCourse() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const onEnd = async (event) => {
     const subtitle = course.subtitles[video.subtitle];
     const currentLesson = course.subtitles[video.subtitle].lessons[video.lesson];
@@ -93,6 +96,7 @@ function OpenCourse() {
     }
   };
   const openExercises = ({ exercise, subtitle, lesson }) => {
+    setVideo(null);
     setQuiz({ exercise, subtitle, lesson });
     setShowQuiz(true);
   };
@@ -185,14 +189,21 @@ function OpenCourse() {
                 subtitle: 0,
                 lesson: 0,
               });
+              setExpanded(0);
             } else {
               const video = userCourse.watchedLessons[userCourse.watchedLessons.length - 1];
-              res.data.subtitles.map((sub, i) => {
-                sub.lessons.map((lesson, j) => {
-                  if (lesson.video && lesson.video._id === video) {
-                    setVideo({ video: lesson.video, subtitle: i, lesson: j });
-                  }
-                });
+              res.data.subtitles.forEach((sub, i) => {
+                if (sub.lessons?.length > 0) {
+                  sub.lessons.forEach((lesson, j) => {
+                    if (lesson.video && lesson.video._id === video) {
+                      setVideo({ video: lesson.video, subtitle: i, lesson: j });
+                      setExpanded(i);
+                    } else if (lesson.exercise) {
+                      openExercises({ exercise: lesson.exercise, subtitle: i, lesson: j });
+                      setExpanded(i);
+                    }
+                  });
+                }
               });
             }
           }
@@ -203,13 +214,14 @@ function OpenCourse() {
   }, []);
   return (
     <Container
-      maxWidth="lg"
       sx={{
         display: 'flex',
         flexGrow: '1',
-        marginY: '1rem',
         backgroundColor: 'white',
+        paddingLeft: '0 !important',
+        paddingRight: '0 !important',
       }}
+      maxWidth="xl"
     >
       <Modal
         open={completed}
@@ -267,34 +279,42 @@ function OpenCourse() {
         >
           {showQuiz ? (
             <Quiz quiz={quiz.exercise} nextExercise={nextExercise} />
-          ) : (
+          ) : video ? (
             <YouTube
               videoId={video ? video.video.url : ''}
               iframeClassName={'lesson'}
               onEnd={onEnd}
               className={'lesson-container'}
             />
+          ) : (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Spinner />
+            </Box>
           )}
           <Box
             sx={{
               flexGrow: '1',
               backgroundColor: 'white',
-              border: '1px solid',
+              border: '0px 1px 1px 0px solid',
               borderColor: 'divider',
             }}
           >
             <Stack direction="row" padding={2}>
               <Typography variant="h6">Notes</Typography>
-              <Button
-                variant="contained"
-                sx={{ ml: 'auto', bgcolor: 'success.main' }}
-                onClick={savePDF}
-              >
-                Save As PDF
-              </Button>
-              <Box sx={{ width: '25%', height: '40px', ml: '1rem', mt: '-1rem' }}>
+              <Stack direction="row" sx={{ ml: 'auto' }} spacing={2}>
+                <Button variant="contained" sx={{ bgcolor: 'success.main' }} onClick={savePDF}>
+                  Save As PDF
+                </Button>
                 <ReportCourse id={id}></ReportCourse>
-              </Box>
+              </Stack>
             </Stack>
             <TextField
               id="outlined-multiline-static"
@@ -329,18 +349,37 @@ function OpenCourse() {
                 <Accordion
                   key={i}
                   elevation={0}
+                  expanded={expanded === i}
+                  onChange={handleChange(i)}
                   sx={{
-                    backgroundColor: 'white',
+                    '&  .MuiAccordionSummary-root': {
+                      minHeight: '0',
+                    },
+                    '&  .MuiAccordionSummary-root.Mui-expanded': {
+                      minHeight: '0',
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{
+                      '& .MuiAccordionSummary-content': {
+                        margin: '0.7rem 0',
+                      },
+                      '&  .MuiAccordionSummary-content.Mui-expanded': {
+                        margin: '0.7rem 0',
+                      },
+                      '&  .MuiAccordionSummary-content.Mui-expanded>P': {
+                        transition: 'all 0.3s ease',
+                        fontWeight: 'medium',
+                      },
+                    }}
                   >
                     <Typography>{subtitle.sTitle}</Typography>
                   </AccordionSummary>
-                  <AccordionDetails sx={{ padding: '0 1rem' }}>
+                  <AccordionDetails sx={{ padding: '0 0' }}>
                     <List>
                       {subtitle.lessons.length !== 0 ? (
                         subtitle.lessons.map((lesson, j) =>
@@ -351,13 +390,15 @@ function OpenCourse() {
                               sx={{
                                 border: 'none',
                                 borderTop: j !== 0 ? '1px solid' : 'none',
-
+                                fontSize: '1rem',
                                 borderColor: 'divider',
-                                backgroundColor: 'white',
+                                backgroundColor:
+                                  video?.video._id === lesson.video._id ? 'grey.400' : 'white',
                                 cursor: 'pointer',
 
                                 '&:hover': {
-                                  backgroundColor: 'grey.300',
+                                  backgroundColor:
+                                    video?.video._id === lesson.video._id ? 'grey.400' : 'grey.300',
                                 },
                               }}
                               onClick={() => {
@@ -378,14 +419,17 @@ function OpenCourse() {
                               component="button"
                               sx={{
                                 border: 'none',
-                                borderLeft: 'none',
-                                borderRight: 'none',
+                                borderTop: j !== 0 ? '1px solid' : 'none',
                                 borderColor: 'divider',
-                                backgroundColor: 'white',
+                                backgroundColor:
+                                  quiz?.exercise._id === lesson.exercise._id ? 'grey.400' : 'white',
                                 cursor: 'pointer',
-
+                                fontSize: '1rem',
                                 '&:hover': {
-                                  backgroundColor: 'grey.300',
+                                  backgroundColor:
+                                    quiz?.exercise._id === lesson.exercise._id
+                                      ? 'grey.400'
+                                      : 'grey.300',
                                 },
                               }}
                               onClick={() => {
