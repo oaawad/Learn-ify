@@ -219,7 +219,7 @@ function Header() {
               flexGrow: 1,
             }}
           >
-            <span style={{ color: '#3145FB' }}>E</span>-Learning
+            Learn-<span style={{ color: '#3145FB' }}>ify</span>
           </Typography>
           <Box
             sx={{
