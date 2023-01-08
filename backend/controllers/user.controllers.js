@@ -182,7 +182,7 @@ const addWatchedLesson = async (req, res) => {
       attachments: [
         {
           filename: 'certificate.pdf',
-          path: './certificate.pdf',
+          path: path.resolve(__dirname, '../output/certificate.pdf'),
         },
       ],
     };
@@ -480,11 +480,22 @@ const sendMail = async (req, res) => {
     const user = await User.findOne({ email });
     if (user) {
       // Send Email
-      createMail(user);
-      res.status(200).json(user);
+      const mailOptions = {
+        to: user.email,
+        subject: 'Password Reset',
+        html: `<h1>Hi ${user.firstName} ${user.lastName}</h1>
+              <p>You have requested to reset your password.</p>
+              <p>Click on the link below to reset your password.</p>
+              <a href="${process.env.CLIENT_URL}/ResetPassword/${generateToken(user._id, '15m')}/${
+          user.email
+        }">Reset Password</a>
+              <p>Best regards,</p>
+              <p>Team Learnify</p>`,
+      };
+      await sendMails(mailOptions);
+      return res.status(200).json({ message: 'Email Sent' });
     } else {
-      res.status(404);
-      throw new Error('User Not Found');
+      res.status(404).json({ message: 'User not found' });
     }
   }
 };
@@ -613,12 +624,12 @@ const downloadNotes = async (req, res) => {
       course: course.title,
       notes: notes,
     },
-    path: './output.pdf',
+    path: path.resolve(__dirname, '../output/notes.pdf'),
   };
   pdf
     .create(document, options)
     .then((response) => {
-      return res.status(200).download('./output.pdf');
+      return res.status(200).download(path.resolve(__dirname, '../output/notes.pdf'));
     })
     .catch((error) => {
       return res.status(400).json({ message: error });
@@ -643,7 +654,7 @@ const downloadCertificate = async (req, res) => {
     duration,
   };
   createCertif(data).then(() => {
-    return res.status(200).download('./certificate.pdf');
+    return res.status(200).download(path.resolve(__dirname, '../output/certificate.pdf'));
   });
 };
 
@@ -663,7 +674,7 @@ const createCertif = async (data) => {
     html: html,
     pageRange: '1',
     data: data,
-    path: './certificate.pdf',
+    path: path.resolve(__dirname, '../output/certificate.pdf'),
     type: 'pdf',
   };
   await pdf.create(document, options);
