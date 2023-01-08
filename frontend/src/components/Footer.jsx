@@ -50,7 +50,7 @@ function Footer() {
                   textDecoration: 'none',
                 }}
               >
-                <span style={{ color: '#3145FB' }}>E</span>-Learning
+                Learn-<span style={{ color: '#3145FB' }}>ify</span>
               </Typography>
               <Stack direction="column">
                 <Typography
@@ -223,7 +223,7 @@ function Footer() {
                   fontWeight="light"
                   fontSize="0.8rem"
                 >
-                  info@elearning.org
+                  info@learn-ify.live
                 </Typography>
                 <Typography
                   varient="body2"
@@ -249,7 +249,7 @@ function Footer() {
             }}
           />
           <Typography variant="body2" color="grey.400" textAlign="center">
-            copyright &copy; 2022 Team Inferno. All Rights Reserved
+            copyright &copy; 2022 Team Inferno. All rights reserved
           </Typography>
         </Box>
       </Container>

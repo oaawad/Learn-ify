@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCountry } from '../features/user/userSlice';
+
 import { toast } from 'react-toastify';
+import countries from '../app/flags';
 import {
   Button,
   TextField,
@@ -13,17 +16,23 @@ import {
   InputAdornment,
   IconButton,
   Modal,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Avatar,
 } from '@mui/material';
 import { EditOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 function ChangePassword() {
-  let { user } = useSelector((state) => state.user);
+  let { user, country } = useSelector((state) => state.user);
+  user = typeof user == 'string' ? JSON.parse(user) : user;
+  country = typeof country == 'string' ? JSON.parse(country) : country;
 
-  if (typeof user == 'string') {
-    user = JSON.parse(user);
-  }
+  const [selected, setSelected] = useState('');
+  const [empty, setEmpty] = useState(false);
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -53,8 +62,23 @@ function ChangePassword() {
     formState: { errors: errors2 },
     setValue: setValue2,
   } = useForm();
-
+  const options = countries;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onChangeCountry = async () => {
+    if (selected === '') {
+      setEmpty(true);
+    } else {
+      const data = { country: options[selected], token: user.token };
+      dispatch(setCountry(data)).then((res) => {
+        if (res.type === 'user/setCountry/fulfilled') {
+          toast.success('Country Successfully Changed!');
+          setSelected('');
+        }
+      });
+    }
+  };
+
   const changePassword = async (userData) => {
     await axios
       .patch(`/api/users/changePass`, userData, {
@@ -116,59 +140,14 @@ function ChangePassword() {
     if (!user) {
       navigate('/login');
     } else {
+      if (country) {
+        const index = options.findIndex((option) => option.name === country.name);
+        setSelected(index);
+      }
       getEmail();
     }
   }, []);
   return (
-    // <>
-    //     <section className="header">
-    //         <h1>Change Password</h1>
-    //     </section>
-
-    //     <section className="form">
-    //         <form onSubmit={onSubmit}>
-    //             <div className="form-group">
-    //                 <input
-    //                     type="password"
-    //                     className="form-control"
-    //                     id="passwordOld"
-    //                     name="passwordOld"
-    //                     value={passwordOld}
-    //                     placeholder="Old Password"
-    //                     onChange={onChange}
-    //                 />
-    //             </div>
-    //             <div className="form-group">
-    //                 <input
-    //                     type="password"
-    //                     className="form-control"
-    //                     id="passwordNew1"
-    //                     name="passwordNew1"
-    //                     value={passwordNew1}
-    //                     placeholder="New Password"
-    //                     onChange={onChange}
-    //                 />
-    //             </div>
-    //             <div className="form-group">
-    //                 <input
-    //                     type="password"
-    //                     className="form-control"
-    //                     id="passwordNew2"
-    //                     name="passwordNew2"
-    //                     value={passwordNew2}
-    //                     placeholder="Confirm Password"
-    //                     onChange={onChange}
-    //                 />
-    //             </div>
-    //             <div className="form-group">
-    //                 <button type="submit" className="btn btn-block">
-    //                     Submit
-    //                 </button>
-    //             </div>
-    //         </form>
-    //     </section>
-
-    // </>
     <Box sx={{ backgroundColor: 'white', paddingBottom: '2rem' }}>
       <Box
         sx={{
@@ -187,6 +166,54 @@ function ChangePassword() {
         </Typography>
       </Box>
       <Container maxWidth="lg">
+        <Box>
+          <Typography variant="h5" color="text.primary">
+            Country
+          </Typography>
+          <Stack alignItems="center" justifyContent="center">
+            <Stack direction="row" sx={{ p: '1rem', width: '50%', alignItems: 'center' }}>
+              <FormControl sx={{ width: '70%' }}>
+                <InputLabel id="demo-simple-select-label" size="small">
+                  Select your country
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={selected}
+                  label="Select your country"
+                  onChange={(event) => {
+                    setSelected(event.target.value);
+                  }}
+                  sx={{
+                    '& .MuiSelect-select': { backgroundColor: 'grey.300' },
+                    borderColor: empty ? 'error.main' : 'grey.700',
+                  }}
+                  size="small"
+                >
+                  {options.map((option, i) => (
+                    <MenuItem key={i} value={i}>
+                      <Stack direction="row">
+                        <Avatar
+                          src={`data:image/png;base64, ${option.flag}`}
+                          sx={{ width: 20, height: 20, marginRight: '1rem' }}
+                        />
+                        <Typography variant="body2">{option.name}</Typography>
+                      </Stack>
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Button
+                variant="outlined"
+                sx={{ marginLeft: 'auto' }}
+                onClick={() => onChangeCountry()}
+              >
+                Change
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+        <Divider sx={{ marginBottom: '2rem' }} />
         <Box>
           <Typography variant="h5" color="text.primary">
             Email

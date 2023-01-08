@@ -62,6 +62,7 @@ function Header() {
       let path = `/${event.target.textContent.toLowerCase()}`;
       path === '/account' ? (path = '/profile') : path;
       path === '/edit profile' ? (path = '/profile/edit') : path;
+      path === '/tickets' ? (path = '/support') : path;
       path === '/logout' ? (onLogout(), (path = '/')) : path;
       path === '/my learning' ? (path = '/learning') : path;
       path === '/payments history' ? (path = '/payments') : path;
@@ -115,7 +116,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            <span style={{ color: '#3145FB' }}>E</span>-Learning
+            Learn-<span style={{ color: '#3145FB' }}>ify</span>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -177,14 +178,6 @@ function Header() {
                 }}
               >
                 <Typography textAlign="center">About</Typography>
-              </MenuItem>
-              <MenuItem
-                onClick={handleCloseNavMenu}
-                sx={{
-                  justifyContent: 'center',
-                }}
-              >
-                <Typography textAlign="center">Support</Typography>
               </MenuItem>
               {!user ? (
                 <Box>
@@ -282,18 +275,6 @@ function Header() {
             >
               About
             </Button>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{
-                mx: 2,
-                color: 'black',
-                display: 'block',
-                textTransform: 'none',
-                color: url === '/Support' ? 'primary.main' : 'black',
-              }}
-            >
-              Support
-            </Button>
           </Box>
 
           {user ? (
@@ -324,8 +305,8 @@ function Header() {
                     {user.type === 'administrator'
                       ? 'Dashboard'
                       : user.type === 'instructor'
-                        ? 'Profile'
-                        : 'My Learning'}
+                      ? 'Profile'
+                      : 'My Learning'}
                   </Typography>
                 </MenuItem>
                 {user.type === 'individual' && (
@@ -335,6 +316,9 @@ function Header() {
                 )}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">Edit Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Tickets</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">Logout</Typography>

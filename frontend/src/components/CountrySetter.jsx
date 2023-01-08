@@ -14,12 +14,11 @@ import {
   Grid,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector, useDispatch } from 'react-redux';
 import countries from '../app/flags';
 import { toast } from 'react-toastify';
-import { setCountry, reset } from '../features/user/userSlice';
+import { setCountry } from '../features/user/userSlice';
 import 'reactjs-popup/dist/index.css';
 import '../styles/countrySetter.css';
 function CountrySetter() {
@@ -36,9 +35,6 @@ function CountrySetter() {
   const [showMenu, setShowMenu] = useState(true);
 
   useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
     if (user) {
       if (country || user.type === 'administrator' || user.type === 'corporate') {
         setShowMenu(false);
@@ -48,7 +44,7 @@ function CountrySetter() {
     } else {
       setShowMenu(false);
     }
-  }, [user, isError, message, country]);
+  }, []);
 
   const onSelectFlag = async (e) => {
     setSelected(e.target.value);
@@ -67,11 +63,15 @@ function CountrySetter() {
                 item
                 sm={5.5}
                 display={{ xs: 'none', sm: 'flex' }}
+                sx={{ flexDirection: 'column' }}
                 justifyContent="center"
                 alignItems="center"
               >
-                <Typography variant="subtitle2" color="grey.700">
-                  Please select your country to continue using the app
+                <Typography variant="subtitle1" sx={{ lineHeight: '1rem' }} color="grey.700">
+                  Please select your country
+                </Typography>
+                <Typography variant="subtitle2" fontWeight="regular" color="grey.700">
+                  you can change it later in edit profile
                 </Typography>
               </Grid>
               <Grid

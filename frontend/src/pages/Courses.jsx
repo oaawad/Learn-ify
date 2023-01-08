@@ -2,7 +2,7 @@ import CourseGallery from '../components/CourseGallery';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Spinner from '../components/Spinner';
-import { Container, Box, Typography, Breadcrumbs, Link } from '@mui/material';
+import { Container, Box, Typography, Breadcrumbs, Link, Pagination } from '@mui/material';
 function Courses() {
   const [courses, setCourses] = useState([]);
 
@@ -52,7 +52,19 @@ function Courses() {
             <Spinner />
           </Box>
         ) : (
-          <CourseGallery courses={courses} noFilters={false} />
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          >
+            <CourseGallery courses={courses} noFilters={false} />
+            <Pagination sx={{ mt: '2rem' }} count={1} shape="rounded" />
+          </Box>
         )}
       </Container>
     </Box>
