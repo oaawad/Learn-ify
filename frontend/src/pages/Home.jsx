@@ -18,11 +18,11 @@ function Home() {
     window.scrollTo(0, 0);
     const fetchTrendingCourses = async () => {
       const res = await axios.get('/api/courses/trending');
-      setTrendingCourses(res.data.slice(0, 4));
+      setTrendingCourses(res.data.slice(0, 3));
     };
     const fetchTopRatedCourses = async () => {
       const res = await axios.get('/api/courses/toprated');
-      setTopRatedCourses(res.data.slice(0, 4));
+      setTopRatedCourses(res.data.slice(0, 3));
     };
     fetchTrendingCourses();
     fetchTopRatedCourses();
@@ -120,7 +120,7 @@ function Home() {
           ) : (
             <Grid container spacing={2}>
               {trendingCourses.map((course) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={course._id}>
+                <Grid item xs={12} sm={6} md={4} key={course._id}>
                   <CourseCard course={course} />
                 </Grid>
               ))}
@@ -150,7 +150,7 @@ function Home() {
           ) : (
             <Grid container spacing={2}>
               {topRatedCourses.map((course) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={course._id}>
+                <Grid item xs={12} sm={6} md={4} key={course._id}>
                   <CourseCard course={course} />
                 </Grid>
               ))}
