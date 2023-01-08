@@ -14,11 +14,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{matrix.node-version}}
-      - name: 'backend'
+      - name: 'Backend Dependencies'
         run: npm i
-      - name: 'frontend'
+      - name: 'Frontend Dependencies & Build'
         run: cd frontend && npm i && npm run build
       - name: 'Create .env file'
-        run: echo "${{ secrets.ENV_PROD }}" > .env 
+        run: cd backend && echo "${{ secrets.ENV_PROD }}" > .env
       - name: 'Deploy'
         run: pm2 stop 1 && pm2 start 1 && sudo service nginx restart
