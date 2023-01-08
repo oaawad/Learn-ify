@@ -16,7 +16,7 @@ jobs:
           node-version: ${{matrix.node-version}}
       - run: 
           npm i 
-      - name: 'Create env file'
+      - name: 'Create .env file'
         run: |
           cd backend
           echo "${{ secrets.Production }}" > .env
