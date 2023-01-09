@@ -1,21 +1,21 @@
 # Learn-ify: 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oaawad/Learnify/node.js.yml) ![Website](https://img.shields.io/website?down_message=offline&up_message=online&url=https%3A%2F%2Flearn-ify.live)
 
-Our project is a Website implemented using MERN stack that helps education be more accessible online and through it, an instructor create a course from one end and the user is able to search and view the available courses to book his/her desirable courses from the other end.
+Our project is a Website implemented using MERN stack that helps education be more accessible online and through it, an instructor create a course from one end and the user is able to search and view the available courses to enroll in his/her desirable courses from the other end.
 
 ## Motivation
 
-Our project aims to create a smooth experience for both the insturctor and the client of the learning process, online learning have become very essential and important. Hence, to accomplish our Advanced Computer Lab project, our team followed the proposed requirements to produce this final product.
+Our project aims to create a smooth experience for both the insturctor and the client of the learning process, online learning have become very essential and important. Hence, to accomplish our Advanced Computer Lab project, we followed the proposed requirements to produce this final product.
 
 ## Table of Content
 
 1. [Key Functionalities](#key-functionalities)
 2. [Backend Structure](#backend-structure)
 3. [Screenshots](#screenshots)
-4. [How the routing is done](#how-the-routing-is-done)
-5. [Build Status](#build-status)
-6. [Extra Feature](#extra-feature)
-7. [Installations](#installations)
+4. [Build Status](#build-status)
+5. [Extra Feature](#extra-feature)
+6. [Installations](#installations)
+7. [Credits](#credits)
 8. [License](#license)
 
 ## Key Functionalities
@@ -116,7 +116,7 @@ Before we dive into the detailed functionalities and how to navigate through our
 
    ![Ticket Routes](/frontend/public/readme/snippets/ticket.png 'Ticket Routes')
 
-## Detailed Functionalities
+## Screenshots
 
 Now that we explored how our backend works, in the following section, we will present some screenshots form our website for different user stories.
 
@@ -174,14 +174,15 @@ Our Admins have a dashboard wher they can control everything, here some examples
   ![Refund Requests](/frontend/public/readme/screenshots/refund.png 'Refund Requests')
 
 ## Build Status
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oaawad/Learnify/node.js.yml) ![Website](https://img.shields.io/website?down_message=offline&up_message=online&url=https%3A%2F%2Flearn-ify.live)
 
-Our team implemented all the functional requirements in our project but we integrated some dummy data to make the website look more professional and aesthetically pleasing, like the courses and the offers and the Frequently asked questions in the Support page, and the analytics in the Admin Page. It would be more useful to make those features functional in the near future.
+The website is currently deployed on a DigitalOcean Droplet linked to the domain [learn-ify.live](https://learn-ify.live) where load balancing is done using [Nginx](https://www.nginx.com), We implemented all the functional requirements in our project but we integrated some dummy data to make the website look more professional and aesthetically pleasing, like the courses and the offers and the Frequently asked questions in the Support page, and the analytics in the Admin Page. It would be more useful to make those features functional in the near future.
 
 ## Extra Feature
 
 We implemented an extra feature in our project which is the Instructor Draft. Instructors have two options when they are creating a course, they can either save it as a draft and edit it later, or make it public so students can start enrolling.
 
-## Installation
+## Installations
 
 Use the package manager [npm](https://www.npmjs.com/) to install the required dependences, they can be found in two locations inside package.json files in the root directory and in the frontend folder, you'll have to run the command in each destination
 
@@ -195,9 +196,20 @@ cd Infrno/frontend
 npm install
 ```
 
+also create a .env file at the root of the repo containing values for the following keys (PORT,ENV,CLIENT_URL,MongoDB_URL,JWT_SECRET,Youtube_API_KEY,STRIPE_KEY,STRIPE_WEBHOOK_SECRET,Mail,Pass)
+
+to run the website locally simply run
+
+```bash
+cd Infrno
+npm run dev
+```
+
 ## Credits
 
-[Code Academy Course: Learn ReactJS](https://www.codecademy.com/learn/react-101)
+[Udemy Course: The Web Development Bootcamp](https://www.udemy.com/course/the-web-developer-bootcamp/)
+
+[FrontendMasters Course: Complete Intro To React](https://frontendmasters.com/courses/complete-react-v7)
 
 [React Documentation](https://reactjs.org/)
 
@@ -206,50 +218,6 @@ npm install
 [MUI React Library](https://mui.com/)
 
 [MERN Stack Authentication Tutorial](https://dev.to/salarc123/mern-stack-authentication-tutorial-part-1-the-backend-1c57)
-
-## Contribution
-
-### Nezar Tarek 43-18960
-
-#### Sprint 1
-
-courses database setup + first step of creating a course
-
-#### Sprint 2
-
-Creating Excersises, Lessons and Courses
-
-#### Sprint 3
-
-Admin can view all reported tickets, resolve user's tickets
-
-### Ziad Khalil 49-5767
-
-#### Sprint 1
-
-View Courses details
-
-#### Sprint 2
-
-Forget password, Reset Password
-
-#### Sprint 3
-
-Users can issue a ticket and see all their previous tickets also following up on them
-
-### Omar Ashraf 49-7384
-
-#### Sprint 1
-
-Users can browse all courses and filter them, Instructors can do the same for their own courses, Admins can invite Instructos and Corporate students as well as creating new admin accounts
-
-#### Sprint 2
-
-Enrolled studnets can watch course's lessons and solve the excersises, they can also rate those courses and their instructors, All users can see the published reviews, Instructors can edit their bio and Email.
-
-#### Sprint 3
-
-Individual students can buy and refund a payment to their wallet, Corporate students can request access for a course, All students can see their own courses in my learning tab where they can write and save notes as PDF while learing also they will receive a personlized certificate on completion. Instructors can see their monthly revenue on the profile, Admins can approve or reject refund and corporate students' course requests, aslo creating promotions for all or specific course(s)
 
 ## License
 
