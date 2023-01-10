@@ -274,11 +274,10 @@ function CreateCourse(props) {
                   <Button onClick={onSubmitDraft} variant="outlined">
                     Save To Draft
                   </Button>
-                  {!props.edit && (
-                    <Button onClick={onSubmitPublish} variant="contained">
-                      Make Public
-                    </Button>
-                  )}
+
+                  <Button onClick={onSubmitPublish} variant="contained">
+                    Make Public
+                  </Button>
                 </Stack>
               </Box>
             </Box>
