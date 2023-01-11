@@ -149,8 +149,11 @@ Now that we explored how our backend works, in the following section, we will pr
 - Create Course
 
   ![Create Course Basic Information](/frontend/public/readme/screenshots/basic.png 'Create Course Basic Information')
+  
   ![Create Course Curriculum](/frontend/public/readme/screenshots/curr.png 'Create Course Curriculum')
+  
   ![Create Course Preview](/frontend/public/readme/screenshots/preview.png 'Create Course Preview')
+  
   ![Create Course Submit](/frontend/public/readme/screenshots/submit.png 'Create Course Submit')
 
 ### 3. Admin Point of View
@@ -168,6 +171,10 @@ Our Admins have a dashboard wher they can control everything, here some examples
 - View and add corporates, Invite corporate students.
 
   ![Corporates](/frontend/public/readme/screenshots/corporates.png 'Corporates')
+
+- View and handle Issued Tickets.
+
+  ![Refund Requests](/frontend/public/readme/screenshots/problems.png 'Issued Tickets')
 
 - View and handle refund requests.
 
@@ -187,12 +194,12 @@ We implemented an extra feature in our project which is the Instructor Draft. In
 Use the package manager [npm](https://www.npmjs.com/) to install the required dependences, they can be found in two locations inside package.json files in the root directory and in the frontend folder, you'll have to run the command in each destination
 
 ```bash
-cd Infrno
+cd Learn-ify
 npm install
 ```
 
 ```bash
-cd Infrno/frontend
+cd Learn-ify/frontend
 npm install
 ```
 
@@ -201,7 +208,7 @@ also create a .env file at the root of the repo containing values for the follow
 to run the website locally simply run
 
 ```bash
-cd Infrno
+cd Learn-ify
 npm run dev
 ```
 
