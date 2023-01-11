@@ -1,7 +1,7 @@
 {
-  "name": "canachamlearining",
+  "name": "learn-ify",
   "version": "1.0.0",
-  "description": "Online Learning Platform",
+  "description": "Online Courses Platform",
   "main": "./backend/server.js",
   "scripts": {
     "start": "node ./backend/server.js",
