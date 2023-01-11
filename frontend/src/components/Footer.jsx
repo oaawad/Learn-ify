@@ -249,7 +249,7 @@ function Footer() {
             }}
           />
           <Typography variant="body2" color="grey.400" textAlign="center">
-            copyright &copy; 2022 Team Inferno. All rights reserved
+            copyrights &copy; 2022 Omar Awad. All rights reserved
           </Typography>
         </Box>
       </Container>
