@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import {
-  Grid,
-  Typography,
-  Box,
-  Rating,
-  Stack,
-  Pagination,
-  Avatar,
-  Button,
-} from '@mui/material';
+import { Grid, Typography, Box, Rating, Stack, Pagination, Avatar, Button } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { toast } from 'react-toastify';
 function Reviews(props) {
@@ -37,27 +28,17 @@ function Reviews(props) {
     setPage(value);
   };
   const stars = [
-    (reviews?.filter((review) => review.rating === 5).length /
-      reviews?.length) *
-      100,
-    (reviews?.filter((review) => review.rating === 4).length /
-      reviews?.length) *
-      100,
-    (reviews?.filter((review) => review.rating === 3).length /
-      reviews?.length) *
-      100,
-    (reviews?.filter((review) => review.rating === 2).length /
-      reviews?.length) *
-      100,
-    (reviews?.filter((review) => review.rating === 1).length /
-      reviews?.length) *
-      100,
+    (reviews?.filter((review) => review.rating === 5).length / reviews?.length) * 100,
+    (reviews?.filter((review) => review.rating === 4).length / reviews?.length) * 100,
+    (reviews?.filter((review) => review.rating === 3).length / reviews?.length) * 100,
+    (reviews?.filter((review) => review.rating === 2).length / reviews?.length) * 100,
+    (reviews?.filter((review) => review.rating === 1).length / reviews?.length) * 100,
   ];
 
   useEffect(() => {
     if (instructor) {
       axios
-        .get(`/api/users/instructors/${instructor}/reviews`)
+        .get(`/api/instructors/${instructor}/reviews`)
         .then((res) => {
           setReviews(res.data);
         })
@@ -83,12 +64,7 @@ function Reviews(props) {
           <Typography variant="body1" fontWeight="bold">
             Base on {reviews?.length} ratings
           </Typography>
-          <Rating
-            readOnly
-            value={rating}
-            precision={0.5}
-            sx={{ mt: '0.5rem', mb: '2rem' }}
-          />
+          <Rating readOnly value={rating} precision={0.5} sx={{ mt: '0.5rem', mb: '2rem' }} />
         </Box>
         <Box>
           <Grid container>
@@ -258,10 +234,7 @@ function Reviews(props) {
               <Stack direction="row" alignItems="center">
                 <Rating readOnly value={review.rating} />
                 {user?._id === review.user._id && (
-                  <Button
-                    onClick={() => deleteReview(review._id)}
-                    sx={{ ml: 'auto' }}
-                  >
+                  <Button onClick={() => deleteReview(review._id)} sx={{ ml: 'auto' }}>
                     <DeleteForeverIcon color="error" />
                   </Button>
                 )}

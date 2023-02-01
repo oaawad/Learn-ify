@@ -87,7 +87,7 @@ function Users(props) {
   const submitInvitation = (data) => {
     axios
       .post(
-        `/api/users/instructors/invite`,
+        `/api/instructors/invite`,
         { email: data.email },
         {
           headers: {

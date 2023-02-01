@@ -11,6 +11,7 @@ const ExpressError = require('./utils/ExpressError');
 
 //Require Routes
 const userRouter = require('./routes/user.router');
+const instructorRouter = require('./routes/instructor.router');
 const courseRouter = require('./routes/course.router');
 const reviewRouter = require('./routes/review.router');
 const paymentRouter = require('./routes/payment.router');
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api/users', userRouter);
+app.use('/api/instructors', instructorRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/reviews', reviewRouter);
 app.use('/api/payment', paymentRouter);

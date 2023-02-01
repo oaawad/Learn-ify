@@ -5,7 +5,7 @@ const API_URL = '/api/users/';
 // Register user
 const register = async (userData) => {
   if (userData.comp) {
-    const response = await axios.post(`${API_URL}/instructors/`, userData.data, {
+    const response = await axios.post(`/api/instructors/`, userData.data, {
       headers: {
         Authorization: `Bearer ${userData.token}`,
       },

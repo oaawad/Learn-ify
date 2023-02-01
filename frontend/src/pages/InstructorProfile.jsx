@@ -62,7 +62,7 @@ function InstructorProfile(props) {
     } else {
       axios
         .patch(
-          `/api/users/instructors/${user._id}`,
+          `/api/instructors/${user._id}`,
           { firstName: name[0], lastName: name[1], bio: data.bio, profession: data.profession },
           {
             headers: {
@@ -83,14 +83,14 @@ function InstructorProfile(props) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    axios.get(`/api/users/instructors/${id ? id : user._id}`).then((res) => {
+    axios.get(`/api/instructors/${id ? id : user._id}`).then((res) => {
       setPublicCourses(res.data.courses);
       setInstructor(res.data.instructor);
     });
 
     if (props.me) {
       axios
-        .get(`/api/users/instructors/${user._id}/private`, {
+        .get(`/api/instructors/${user._id}/private`, {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

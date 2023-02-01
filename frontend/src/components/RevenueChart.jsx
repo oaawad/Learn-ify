@@ -33,7 +33,7 @@ function RevenueChart(props) {
   };
   const getRevenuePerMonth = (month) => {
     axios
-      .get('/api/users/instructor/revenue', {
+      .get('/api/instructors/revenue', {
         headers: {
           Authorization: `Bearer ${props.token}`,
         },
